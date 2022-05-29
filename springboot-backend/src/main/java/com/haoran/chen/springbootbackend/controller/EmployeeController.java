@@ -40,20 +40,20 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
-//    // build update employee REST API
-//    @PutMapping("{id}")
-//    public ResponseEntity<Employee> updateEmployee(@PathVariable long id,@RequestBody Employee employeeDetails) {
-//        Employee updateEmployee = employeeRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id: " + id));
-//
-//        updateEmployee.setFirstName(employeeDetails.getFirstName());
-//        updateEmployee.setLastName(employeeDetails.getLastName());
-//        updateEmployee.setEmailId(employeeDetails.getEmailId());
-//
-//        employeeRepository.save(updateEmployee);
-//
-//        return ResponseEntity.ok(updateEmployee);
-//    }
+    @PutMapping("{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id,
+                                                   @RequestBody Employee employeeDetails) {
+        Employee updateEmployee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id: " + id));
+
+        updateEmployee.setFirstName(employeeDetails.getFirstName());
+        updateEmployee.setLastName(employeeDetails.getLastName());
+        updateEmployee.setEmailId(employeeDetails.getEmailId());
+
+        employeeRepository.save(updateEmployee);
+
+        return ResponseEntity.ok(updateEmployee);
+    }
 
 //    // build delete employee REST API
 //    @DeleteMapping("{id}")
