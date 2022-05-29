@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 const ListEmployeeComponent = () => {
   const [employees, setEmployee] = useState([]);
+  
   useEffect(() => {
     EmployeeService.getAllEmployees().then(response => {
         setEmployee(response.data);

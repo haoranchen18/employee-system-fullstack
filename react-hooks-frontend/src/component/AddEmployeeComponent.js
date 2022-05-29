@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import EmployeeService from "../services/EmployeeService";
+import { Link, useHistory } from "react-router-dom";
 
 const AddEmployeeComponent = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
+  const history = useHistory();
 
   const saveEmployee = (event) => {
     event.preventDefault();
@@ -12,7 +15,11 @@ const AddEmployeeComponent = () => {
       lastName: lastName, 
       emailId: emailId
     };
-    console.log(employee);
+    
+    EmployeeService.createEmployee(employee).then(response => {
+        console.log(response.data);
+        history.push('/employees');
+    });
 
   };
 
@@ -67,6 +74,7 @@ const AddEmployeeComponent = () => {
                 >
                   Submit
                 </button>
+                <Link to="/employees" className="btn btn-danger">Cancel</Link>
               </form>
             </div>
           </div>
