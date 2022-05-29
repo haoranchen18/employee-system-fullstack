@@ -1,8 +1,10 @@
 package com.haoran.chen.springbootbackend.controller;
 
+import com.haoran.chen.springbootbackend.exception.ResourceNotFoundException;
 import com.haoran.chen.springbootbackend.model.Employee;
 import com.haoran.chen.springbootbackend.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,13 +15,14 @@ import java.util.List;
 public class EmployeeController {
 
     private EmployeeRepository employeeRepository;
+
     @Autowired
     public EmployeeController(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
     @GetMapping
-    public List<Employee> getAllEmployees(){
+    public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
@@ -29,13 +32,13 @@ public class EmployeeController {
         return employeeRepository.save(employee);
     }
 
-//    // build get employee by id REST API
-//    @GetMapping("{id}")
-//    public ResponseEntity<Employee> getEmployeeById(@PathVariable  long id){
-//        Employee employee = employeeRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id:" + id));
-//        return ResponseEntity.ok(employee);
-//    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id:" + id));
+        return ResponseEntity.ok(employee);
+    }
 
 //    // build update employee REST API
 //    @PutMapping("{id}")
