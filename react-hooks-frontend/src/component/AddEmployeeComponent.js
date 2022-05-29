@@ -7,41 +7,56 @@ const AddEmployeeComponent = () => {
   const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
   const history = useHistory();
-  const {id} = useParams();
+  const { id } = useParams();
 
-  const saveEmployee = (event) => {
+  const saveOrUpdateEmployee = (event) => {
     event.preventDefault();
     const employee = {
-      firstName: firstName, 
-      lastName: lastName, 
-      emailId: emailId
+      firstName: firstName,
+      lastName: lastName,
+      emailId: emailId,
     };
-    
-    EmployeeService.createEmployee(employee).then(response => {
-        console.log(response.data);
-        history.push('/employees');
-    });
 
+    if (id) {
+      EmployeeService.updateEmployee(id, employee)
+        .then((response) => {
+          history.push("/employees");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      EmployeeService.createEmployee(employee)
+        .then((response) => {
+          console.log(response.data);
+
+          history.push("/employees");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   useEffect(() => {
+    EmployeeService.getEmployeeById(id)
+      .then((response) => {
+        setFirstName(response.data.firstName);
+        setLastName(response.data.lastName);
+        setEmailId(response.data.emailId);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-    EmployeeService.getEmployeeById(id).then((response) =>{
-        setFirstName(response.data.firstName)
-        setLastName(response.data.lastName)
-        setEmailId(response.data.emailId)
-    }).catch(error => {
-        console.log(error)
-    })
-}, []);
-
-const title = () => {
-  if (id) {
-    return <h2 className = "text-center">Update Employee</h2>
-  } else {
-    return <h2 className = "text-center">Add Employee Here</h2>
-  }
-}
+  const title = () => {
+    if (id) {
+      return <h2 className="text-center">Update Employee</h2>;
+    } else {
+      return <h2 className="text-center">Add Employee Here</h2>;
+    }
+  };
 
   return (
     <div>
@@ -91,11 +106,13 @@ const title = () => {
 
                 <button
                   className="btn btn-success"
-                  onClick={(event) => saveEmployee(event)}
+                  onClick={(event) => saveOrUpdateEmployee(event)}
                 >
                   Submit
                 </button>
-                <Link to="/employees" className="btn btn-danger">Cancel</Link>
+                <Link to="/employees" className="btn btn-danger">
+                  Cancel
+                </Link>
               </form>
             </div>
           </div>
