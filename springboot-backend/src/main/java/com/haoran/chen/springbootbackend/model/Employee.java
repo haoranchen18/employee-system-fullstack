@@ -16,13 +16,13 @@ import javax.persistence.*;
 public class Employee {
     @Id
     @SequenceGenerator(
-            name="course_sequence",
-            sequenceName = "course_sequence",
+            name="employee_sequence",
+            sequenceName = "employee_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "course_sequence"
+            generator = "employee_sequence"
     )
     private Long id;
 
