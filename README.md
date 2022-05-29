@@ -8,3 +8,16 @@ A complete full-stack web application: React Hooks and Spring Boot CRUD Full Sta
 * React (React Hooks) as frontend
   * introduce axios to help with HTTP request as a client
 * MySQL database to store and retrieve the data
+
+## Screenshot Demo
++ List of Employees
+
+![img.png](./pictures/img.png)
+
++ Add Employee Form
+
+![img_1.png](./pictures/img_1.png)
+
++ Update Employee Form
+
+![img_2.png](./pictures/img_2.png)
